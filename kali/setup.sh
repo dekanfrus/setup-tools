@@ -103,6 +103,8 @@ NC='\033[0m'
 		git clone --quiet https://github.com/dekanfrus/ad-ldap-enum.git
 	echo -e "${GRN}   -- AutoRecon${NC}" >&3
 		git clone --quiet https://github.com/Tib3rius/AutoRecon
+	echo -e "${GRN}   -- net-creds${NC}" >&3
+		git clone --quiet https://github.com/DanMcInerney/net-creds.git
 
 	# Password Tools
 	cd /tools/passwords
