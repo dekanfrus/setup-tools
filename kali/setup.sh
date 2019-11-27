@@ -116,6 +116,8 @@ NC='\033[0m'
 	# zsh, vim, tmux config
 	echo -e "${GRN}[+] Installing Powerline${NC}" >&3
 	apt-get install powerline zsh-syntax-highlighting zsh-theme-powerlevel9k vim tmux vim-addon-manager -y
+	git clone --quiet https://github.com/gabrielelana/awesome-terminal-fonts.git ~/Downloads/fonts && cd ~/Downloads/fonts
+	bash install.sh
 	
 	echo "${GRN}[+] Configuring zshrc${NC}" >&3
 	cp zshrc ~/.zshrc
