@@ -84,7 +84,7 @@ NC='\033[0m'
 	# Access Tools
 	cd /tools/access
 	echo -e "${GRN}   -- WitnessMe${NC}" >&3
-		git clone --quiet https://github.com/byt3bl33d3r/WitnessMe /tools/access/ witnessme && cd witnessme
+		git clone --quiet https://github.com/byt3bl33d3r/WitnessMe /tools/access/witnessme && cd witnessme
 	
 	echo -e "${GRN}   -- EyeWitness${NC}" >&3
 		git clone --quiet https://github.com/FortyNorthSecurity/EyeWitness.git /tools/access/eyewitness
