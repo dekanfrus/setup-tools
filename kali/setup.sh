@@ -55,6 +55,7 @@ wdir=`pwd`
 	python3 -m pip install pysnmp 
 	python3 -m pip install pyasn1 
 	python3 -m pip install yara-python
+	python3 -m pip install truffleHog
 	
 	pip3 install pipenv && pipenv install --three 
 	PYTHON_BIN_PATH="$(python3 -m site --user-base)/bin"
@@ -106,8 +107,7 @@ wdir=`pwd`
 
 	echo -e "${GRN}   -- jLoot${NC}" >&3
 		cd /tools/access
-		git clone https://github.com/netspooky/jLoot.git
-
+		git clone --quiet https://github.com/netspooky/jLoot.git
 
 	# Recon Tools
 	cd /tools/recon
@@ -127,24 +127,35 @@ wdir=`pwd`
 	
 	# zsh, vim, tmux config
 	echo -e "${GRN}[+] Installing Powerline, Fonts, and ZSH Addons${NC}" >&3
-	apt-get install powerline zsh-syntax-highlighting zsh-theme-powerlevel9k vim tmux vim-addon-manager -y
+		apt-get install powerline zsh-syntax-highlighting zsh-theme-powerlevel9k vim tmux vim-addon-manager -y
+		
+		git clone --quiet --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+		git clone --quiet https://github.com/gabrielelana/awesome-terminal-fonts.git ~/Downloads/fonts && cd ~/Downloads/fonts
+		bash install.sh
 	
-	git clone --quiet --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
-	git clone --quiet https://github.com/gabrielelana/awesome-terminal-fonts.git ~/Downloads/fonts && cd ~/Downloads/fonts
-	bash install.sh
+		git clone --quiet https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
+	
+		cd ~/Downloads
+		git clone https://github.com/ryanoasis/nerd-fonts.git && cd nerd-fonts
+		bash install.sh Hack
 
-	git clone --quiet https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
-
-	cd ~/Downloads
-	git clone --quiet https://github.com/ryanoasis/nerd-fonts.git && cd nerd-fonts
-	bash install.sh Hack
+	echo "${GRN}[+] Installing LSD${NC}" >&3
+		cd $HOME/Downloads
+		wget "https://github.com/Peltoche/lsd/releases/download/0.16.0/lsd_0.16.0_amd64.deb"
+		sudo dpkg -i lsd_0.16.0_amd64.deb
+		rm lsd_0.16.0_amd64.deb
 
 	echo "${GRN}[+] Configuring zshrc${NC}" >&3
-	cp zshrc ~/.zshrc
-	cp aliases ~/.aliases
-	cp -r .config ~/.config
-	cp .gitconfig ~/.gitconfig
-	cp -r .local ~/.local
+	#cp zshrc ~/.zshrc
+	#cp aliases ~/.aliases
+	#cp -r .config ~/.config
+	#cp .gitconfig ~/.gitconfig
+	#cp -r .local ~/.local
+	cd
+	git init
+	git remote add origin https://github.com/dekanfrus/dotfiles.git
+	git pull
+
 	#git clone https://www.github.com/dekanfrus/dotfiles ~/
 	
 	echo "${GRN}[+] Installing Powerline for VIM${NC}" >&3
@@ -158,12 +169,6 @@ wdir=`pwd`
 	#echo source "/usr/share/powerline/bindings/tmux/powerline.conf" >> ~/.tmux.conf
 	#echo "set-option -g default-shell /bin/zsh" >> ~/.tmux.conf
 	
-	echo "${GRN}[+] Installing LSD${NC}" >&3
-	cd $HOME/Downloads
-	wget "https://github.com/Peltoche/lsd/releases/download/0.16.0/lsd_0.16.0_amd64.deb"
-	sudo dpkg -i lsd_0.16.0_amd64.deb
-	rm lsd_0.16.0_amd64.deb
-
 	echo "${GRN}[+] Setting zshell as default${NC}" >&3
 	chsh -s /bin/zsh
 	
