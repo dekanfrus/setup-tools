@@ -108,6 +108,11 @@ wdir=`pwd`
 	echo -e "${GRN}   -- jLoot${NC}" >&3
 		cd /tools/access
 		git clone --quiet https://github.com/netspooky/jLoot.git
+	
+	echo -e "${GRN}   -- Evil WinRM${NC}" >&3
+		git clone --quiet https://github.com/Hackplayers/evil-winrm
+		gem install bundler:2.0.2
+		bundle update
 
 	# Recon Tools
 	cd /tools/recon
