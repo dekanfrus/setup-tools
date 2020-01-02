@@ -56,6 +56,8 @@ wdir=`pwd`
 	python3 -m pip install pyasn1 
 	python3 -m pip install yara-python
 	python3 -m pip install truffleHog
+	python2 -m pip install xlrd
+	python3 -m pip install xlrd
 	
 	pip3 install pipenv && pipenv install --three 
 	PYTHON_BIN_PATH="$(python3 -m site --user-base)/bin"
@@ -130,15 +132,22 @@ wdir=`pwd`
 	#echo -e "${GRN}   -- Installing...${NC}" >&3
 	#	cd patator && pipenv run python3 setup.py install 
 	
+	# Exploitation Tools
+	cd /tools/exploitation
+	echo -e "${GRN}   -- Sherlock${NC}" >&3
+		git clone --quiet https://github.com/rasta-mouse/Sherlock.git
+	echo -e "${GRN}   -- Watson${NC}" >&3
+		git clone --quiet https://github.com/rasta-mouse/Watson.git
+	echo -e "${GRN}   -- Windows-Exploit-Suggester${NC}" >&3
+		git clone --quiet https://github.com/AonCyberLabs/Windows-Exploit-Suggester.git
+
 	# zsh, vim, tmux config
 	echo -e "${GRN}[+] Installing Powerline, Fonts, and ZSH Addons${NC}" >&3
-		apt-get install powerline zsh-syntax-highlighting zsh-theme-powerlevel9k vim tmux vim-addon-manager -y
+		apt-get install powerline zsh-syntax-highlighting zsh-theme-powerlevel9k vim tmux vim-addon-manager zsh-autosuggestions -y
 		
 		git clone --quiet --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
 		git clone --quiet https://github.com/gabrielelana/awesome-terminal-fonts.git ~/Downloads/fonts && cd ~/Downloads/fonts
 		bash install.sh
-	
-		git clone --quiet https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
 	
 		cd ~/Downloads
 		git clone https://github.com/ryanoasis/nerd-fonts.git && cd nerd-fonts
@@ -151,17 +160,14 @@ wdir=`pwd`
 		rm lsd_0.16.0_amd64.deb
 
 	echo "${GRN}[+] Configuring zshrc${NC}" >&3
-	#cp zshrc ~/.zshrc
-	#cp aliases ~/.aliases
-	#cp -r .config ~/.config
-	#cp .gitconfig ~/.gitconfig
-	#cp -r .local ~/.local
-	cd
-	git init
-	git remote add origin https://github.com/dekanfrus/dotfiles.git
-	git pull
-
-	#git clone https://www.github.com/dekanfrus/dotfiles ~/
+	cd $HOME/Downloads
+	git clone --quiet https://www.github.com/dekanfrus/dotfiles && cd dotfiles
+	cp .aliases ~/.aliases
+	cp .bashrc ~/.bashrc
+	cp .tmux.conf ~/.tmux.conf
+	cp .vimrc ~/.vimrc
+	cp .zshrc ~/.zshrc
+	
 	
 	echo "${GRN}[+] Installing Powerline for VIM${NC}" >&3
 	cd /root/Downloads
@@ -169,24 +175,9 @@ wdir=`pwd`
 	git clone https://github.com/vim-airline/vim-airline-themes.git
 	cp vim-airline-themes/autoload/airline/themes/* ~/.vim/pack/dist/start/vim-airline/autoload/airline/themes/
 	
-	#echo "${GRN}[+] Installing Powerline for tmux${NC}" >&3
-	#echo "run-shell "powerline-daemon -q"" >> ~/.tmux.conf
-	#echo source "/usr/share/powerline/bindings/tmux/powerline.conf" >> ~/.tmux.conf
-	#echo "set-option -g default-shell /bin/zsh" >> ~/.tmux.conf
-	
 	echo "${GRN}[+] Setting zshell as default${NC}" >&3
 	chsh -s /bin/zsh
 	
-	#echo "${GRN}[+] Installing USB NIC drivers" >&3
-	#cd /tmp
-	#wget "https://www.asix.com.tw/FrootAttach/driver/AX88179_178A_LINUX_DRIVER_v1.19.0_SOURCE.tar.bz2"
-	#tar xvjf *.tar.bz2
-	#cd *SOURCE
-	#make
-	#make install
-	#modprobe asix
-	#echo "[+] Reboot required!" >&3
-
 	exec 1>&3 3>&-
 
 } || {
