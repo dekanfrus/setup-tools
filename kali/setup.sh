@@ -141,17 +141,22 @@ wdir=`pwd`
 	echo -e "${GRN}   -- Windows-Exploit-Suggester${NC}" >&3
 		git clone --quiet https://github.com/AonCyberLabs/Windows-Exploit-Suggester.git
 
+	# installing oh-my-zsh
+	sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+
 	# zsh, vim, tmux config
 	echo -e "${GRN}[+] Installing Powerline, Fonts, and ZSH Addons${NC}" >&3
-		apt-get install powerline zsh-syntax-highlighting zsh-theme-powerlevel9k vim tmux vim-addon-manager zsh-autosuggestions -y
+		apt-get install powerline zsh zsh-syntax-highlighting zsh-theme-powerlevel9k vim tmux vim-addon-manager zsh-autosuggestions -y
 		
-		git clone --quiet --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+		git clone --quiet --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME/.oh-my-zsh/themes/powerlevel10k
 		git clone --quiet https://github.com/gabrielelana/awesome-terminal-fonts.git ~/Downloads/fonts && cd ~/Downloads/fonts
 		bash install.sh
 	
 		cd ~/Downloads
 		git clone https://github.com/ryanoasis/nerd-fonts.git && cd nerd-fonts
 		bash install.sh Hack
+
+	
 
 	echo "${GRN}[+] Installing LSD${NC}" >&3
 		cd $HOME/Downloads
@@ -161,16 +166,16 @@ wdir=`pwd`
 
 	echo "${GRN}[+] Configuring zshrc${NC}" >&3
 	cd $HOME/Downloads
-	git clone --quiet https://www.github.com/dekanfrus/dotfiles && cd dotfiles
-	cp .aliases ~/.aliases
-	cp .bashrc ~/.bashrc
-	cp .tmux.conf ~/.tmux.conf
-	cp .vimrc ~/.vimrc
-	cp .zshrc ~/.zshrc
-	
+	wget https://raw.githubusercontent.com/dekanfrus/dotfiles/master/zshrc -O $HOME/.zshrc
+	wget https://raw.githubusercontent.com/dekanfrus/dotfiles/master/aliases -O $HOME/.aliases
+	wget https://raw.githubusercontent.com/dekanfrus/dotfiles/master/bashrc -O $HOME/.bashrc
+	wget https://raw.githubusercontent.com/dekanfrus/dotfiles/master/dput.cf -O $HOME/.dput.cf
+	wget https://raw.githubusercontent.com/dekanfrus/dotfiles/master/p10k.zsh -O $HOME/.p10k.zsh
+	wget https://raw.githubusercontent.com/dekanfrus/dotfiles/master/vimrc -O $HOME/.vimrc
+	wget https://raw.githubusercontent.com/dekanfrus/dotfiles/master/tmux.conf -O $HOME/.tmux.conf
 	
 	echo "${GRN}[+] Installing Powerline for VIM${NC}" >&3
-	cd /root/Downloads
+	cd $HOME/Downloads
 	git clone https://github.com/vim-airline/vim-airline ~/.vim/pack/dist/start/vim-airline
 	git clone https://github.com/vim-airline/vim-airline-themes.git
 	cp vim-airline-themes/autoload/airline/themes/* ~/.vim/pack/dist/start/vim-airline/autoload/airline/themes/
