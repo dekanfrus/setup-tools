@@ -148,6 +148,9 @@ wdir=`pwd`
 		git clone --quiet https://github.com/rasta-mouse/Watson.git
 	echo -e "${GRN}   -- Windows-Exploit-Suggester${NC}" >&3
 		git clone --quiet https://github.com/AonCyberLabs/Windows-Exploit-Suggester.git
+	echo -e "${GRN}   -- One-Lin3r${NC}" >&3
+		pip3 install one-lin3r
+		pip3 install prompt-toolkit --force-reinstall
 
 	# installing oh-my-zsh
 	sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
@@ -163,8 +166,6 @@ wdir=`pwd`
 		cd ~/Downloads
 		git clone https://github.com/ryanoasis/nerd-fonts.git && cd nerd-fonts
 		bash install.sh Hack
-
-	
 
 	echo "${GRN}[+] Installing LSD${NC}" >&3
 		cd $HOME/Downloads
