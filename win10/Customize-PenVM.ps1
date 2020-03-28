@@ -2215,7 +2215,7 @@ Function AdditionalTools {
 	
 	git clone https://github.com/powerline/fonts.git
 	cd fonts
-	.\install.ps1 
+	.\install.ps1 meslo-*,hack-*
 	
 	Install-PackageProvider NuGet -MinimumVersion '2.8.5.201' -Force
 	Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
