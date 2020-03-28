@@ -2267,7 +2267,7 @@ Function AdditionalTools {
 
 # Install Chocolatey & Applications
 Function InstallChocolatey {
-	#Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+	Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 	RefreshEnv.cmd
 	choco install sublimetext3 --force --force-dependencies -y
 	choco install powershell --force --force-dependencies -y
