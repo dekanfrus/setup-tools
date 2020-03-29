@@ -56,6 +56,7 @@ wdir=`pwd`
 	python3 -m pip install pyasn1 
 	python3 -m pip install yara-python
 	python3 -m pip install truffleHog
+	python3 -m pip install pypykatz
 	python2 -m pip install xlrd
 	python3 -m pip install xlrd
 	
