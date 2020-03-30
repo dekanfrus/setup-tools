@@ -2195,10 +2195,13 @@ Function AdditionalTools {
 		Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name TaskbarGlomLevel -Value 2
 		Stop-Process -ProcessName explorer -Force
 	}
-	
+
 	Write-Host "Enabling File Extensions"
 	Set-ItemProperty -Path 'HKCU:Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name HideFileExt 0
 	
+	New-Item -Path 'HKLM:SOFTWARE\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell' -Name ExecutionPolicy
+	Set-ItemProperty -Path 'HKLM:SOFTWARE\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell' -Name ExecutionPolicy -Value Unrestricted
+
 	Write-Host "Installing Windows SSH Client & Server"
 	Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
 	Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
@@ -2206,6 +2209,7 @@ Function AdditionalTools {
 	Write-Host "Enabling SSH Service"
 	Start-Service sshd
 	Set-Service -Name sshd -StartupType 'Automatic'
+	Set-Service -Name ssh-agent -StartupType 'Automatic'
 	
 	Write-Host "Installing WSL"
 	Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
