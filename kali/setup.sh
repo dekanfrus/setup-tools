@@ -20,12 +20,12 @@ wdir=`pwd`
 	echo
 	
 	if [ "${userid}" != '0' ]; then
-	  echo '[Error]: You must run this setup script with root privileges.' >&3
+	  echo '[Error]: You must run this setup script with root privileges.'
 	  echo
 	  exit 1
 	fi
 	
-	echo -e "${GRN} [+] Updating System. Please Be Patient.${NC}" >&3
+	echo -e "${GRN} [+] Updating System. Please Be Patient.${NC}"
 	apt-get update -qq && apt-get -o Dpkg::Use-Pty=0 install kali-defaults -qq && apt-get -o Dpkg::Use-Pty=0 install kali-linux-full -qq && apt-get upgrade -o Dpkg::Use-Pty=0 -qq && apt-get dist-upgrade -qq -o Dpkg::Use-Pty=0
 	apt-get -o Dpkg::Use-Pty=0 install libsasl2-dev python-dev libldap2-dev libssl-dev cmake python3 xvfb python3-pip python-netaddr python3-dev tesseract-ocr firefox-esr kali-root-login desktop-base kde-plasma-desktop python-pip python-dev libffi-dev libssl-dev libxml2-dev libxslt1-dev zlib1g-dev tilix xclip -qq
 	
@@ -56,6 +56,7 @@ wdir=`pwd`
 	python3 -m pip install pyasn1 
 	python3 -m pip install yara-python
 	python3 -m pip install truffleHog
+	python3 -m pip install pypykatz
 	python2 -m pip install xlrd
 	python3 -m pip install xlrd
 	
