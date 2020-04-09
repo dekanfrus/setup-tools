@@ -148,6 +148,7 @@ $tweaks = @(
 	#"UnpinTaskbarIcons",
 
 	### Custom Functions ###
+	"PowerSettings,"
 	"InstallChocolatey",
 	"AdditionalTools",
 
@@ -2176,6 +2177,19 @@ Function WaitForKey {
 	Write-Host "Press any key to continue..." -ForegroundColor Black -BackgroundColor White
 	[Console]::ReadKey($true) | Out-Null
 }
+
+Function PowerSettings {
+	Write-Host "Disabling Sleep, Hibernate, and Screen Timeout"
+	powercfg.exe -x -monitor-timeout-ac 0
+	powercfg.exe -x -monitor-timeout-dc 0
+	powercfg.exe -x -disk-timeout-ac 0
+	powercfg.exe -x -disk-timeout-dc 0
+	powercfg.exe -x -standby-timeout-ac 0
+	powercfg.exe -x -standby-timeout-dc 0
+	powercfg.exe -x -hibernate-timeout-ac 0
+	powercfg.exe -x -hibernate-timeout-dc 0
+}
+
 Function AdditionalTools {
 
 	$ScriptLocation = Split-Path $script:MyInvocation.MyCommand.Path
@@ -2252,7 +2266,8 @@ Function AdditionalTools {
 	$modulePath = [Environment]::GetEnvironmentVariable('PSModulePath')
 	$modulePath += ';C:\Tools\PowerShell\WindowsPowerShell\Modules'
 	[Environment]::SetEnvironmentVariable('PSModulePath', $modulePath)
-
+	
+	cd C:\Tools\PowerShell\WindowsPowerShell\Modules
 	git clone --recurse-submodules https://github.com/mdsecresearch/LyncSniper.git
 	git clone https://github.com/dafthack/MailSniper.git
 	git clone https://github.com/dafthack/EmailAddressMangler.git
@@ -2288,7 +2303,7 @@ Function InstallChocolatey {
 	choco install javaruntime --force --force-dependencies -y
 	choco install burp-suite-free-edition --force --force-dependencies -y
 	choco install 7zip.install --force --force-dependencies -y
-	#choco install visualstudiocode --force --force-dependencies -y
+	choco install visualstudiocode --force --force-dependencies -y
 	choco install filezilla --force --force-dependencies -y
 	choco install curl --force --force-dependencies -y
 	choco install wget --force --force-dependencies -y
