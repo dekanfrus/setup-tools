@@ -2235,6 +2235,28 @@ Function AdditionalTools {
 	cd fonts
 	.\install.ps1 meslo-*,hack-*
 	
+	Invoke-WebRequest -Uri "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf" -OutFile "$ScriptLocation\MesloLGS NF Regular.ttf" -UseBasicParsing
+	Invoke-WebRequest -Uri "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf" -OutFile "$ScriptLocation\MesloLGS NF Bold.ttf" -UseBasicParsing
+	Invoke-WebRequest -Uri "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf" -OutFile "$ScriptLocation\MesloLGS NF Italic.ttf" -UseBasicParsing
+	Invoke-WebRequest -Uri "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf" -OutFile "$ScriptLocation\MesloLGS NF Bold Italic.ttf" -UseBasicParsing
+
+	$fontFiles = New-Object 'System.Collections.Generic.List[System.IO.FileInfo]'
+
+	$fontFiles.Add("MesloLGS NF Regular.ttf")
+	$fontFiles.Add("MesloLGS NF Bold.ttf")
+	$fontFiles.Add("MesloLGS NF Italic.ttf")
+	$fontFiles.Add("MesloLGS NF Bold Italic.ttf")
+
+	$fonts = $null
+	foreach ($fontFile in $fontFiles) {
+    	    if (!$fonts) {
+    	        $shellApp = New-Object -ComObject shell.application
+    	        $fonts = $shellApp.NameSpace(0x14)
+    	    }
+    	    $fonts.CopyHere($fontFile.FullName)
+	}
+
+
 	Install-PackageProvider NuGet -MinimumVersion '2.8.5.201' -Force
 	Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 	Install-Module -Name 'posh-git'
@@ -2252,10 +2274,9 @@ Function AdditionalTools {
 	
 	Copy-Item "$ScriptLocation\ConEmu.xml" "C:\Program Files\ConEmu\ConEmu\ConEmu.xml"
 	Copy-Item "$ScriptLocation\Sorin.psm1" "$PoshLocation\Themes\Sorin.psm1"
-	Copy-Item "$ScriptLocation\profiles.json" "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\profiles.json"
-	
-	
-	
+	# Windows Terminal does not get installed out of the box
+	# Copy-Item "$ScriptLocation\profiles.json" "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\profiles.json"
+		
 	Write-Host "Downloading Additional Tools from GitHub..."
 	if(Test-Path "C:\Tools\PowerShell\WindowsPowerShell\Modules"){
 		cd "C:\Tools\PowerShell\WindowsPowerShell\Modules"
